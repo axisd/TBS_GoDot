@@ -1,11 +1,13 @@
 extends Node2D
 
+class_name TurnTransition
+
 var ally_texture;
 var enemy_texture;
 
 func _ready():
-	BattlefieldInfo.turn_manager.connect("play_transition", self, "start_transition")
-	BattlefieldInfo.tile_unit_updater.connect("update_done", self, "finish_turn_transition")
+	BattlefieldInfo.turn_manager.play_transition.connect(start_transition)
+	BattlefieldInfo.tile_unit_updater.update_done.connect(finish_turn_transition)
 	BattlefieldInfo.turn_transition = self
 
 func start_level():

@@ -1,3 +1,4 @@
+@tool
 # The MIT License (MIT)
 #
 # Copyright (c) 2018 George Marques
@@ -20,7 +21,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-tool
 extends EditorPlugin
 
 var import_plugin = null

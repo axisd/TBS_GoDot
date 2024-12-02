@@ -18,8 +18,8 @@ func _init():
 	vez = BattlefieldInfo.enemy_units["Vezarius"]
 	
 	# Register to the turn numbers
-	BattlefieldInfo.turn_manager.connect("enemy_turn_increased", self, "start_mid")
-	BattlefieldInfo.turn_manager.connect("player_turn_increased", self, "play_player_transition")
+	BattlefieldInfo.turn_manager.connect("enemy_turn_increased", Callable(self, "start_mid"))
+	BattlefieldInfo.turn_manager.connect("player_turn_increased", Callable(self, "play_player_transition"))
 	
 	path = "res://Scenes/Events/Level 2/L2 Event Mid 10.gd"
 
@@ -36,17 +36,20 @@ func start_mid(turn_number):
 	BattlefieldInfo.event_system.pause_ui()
 	
 	# Signals needed
-	BattlefieldInfo.movement_system_cinematic.connect("individual_unit_finished_moving", self, "start_dialogue")
-	BattlefieldInfo.message_system.connect("no_more_text", self, "spawn_enemies")
-	BattlefieldInfo.main_game_camera.get_node("Tween").connect("tween_all_completed", self, "move_actor")
+	BattlefieldInfo.movement_system_cinematic.individual_unit_finished_moving.connect(start_dialogue)
+	BattlefieldInfo.message_system.no_more_text.connect(spawn_enemies)
+	BattlefieldInfo.main_game_camera.camera_tween.finished.connect(move_actor)
 	
 	move_camera()
 
 func move_camera():
 	var new_position_for_camera = Vector2(0,190)
-	BattlefieldInfo.main_game_camera.get_node("Tween").interpolate_property(BattlefieldInfo.main_game_camera, "position", BattlefieldInfo.main_game_camera.position, new_position_for_camera, 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	BattlefieldInfo.main_game_camera.camera_tween \
+		.tween_property(BattlefieldInfo.main_game_camera, "position", \
+			Tween.interpolate_value(BattlefieldInfo.main_game_camera.position, new_position_for_camera - BattlefieldInfo.main_game_camera.position, 0.5, 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT), \
+			1)
 	BattlefieldInfo.main_game_camera.current = true
-	BattlefieldInfo.main_game_camera.get_node("Tween").start()
+	BattlefieldInfo.main_game_camera.camera_tween.play()
 
 func move_actor():
 	# Build path to Vezarius Original Location
@@ -79,16 +82,16 @@ func spawn_enemies():
 		# Spawn random new enemy based on the number that was randomly generated
 		match random_unit:
 			0:
-				newEnemy = e_soldier.instance()
+				newEnemy = e_soldier.instantiate()
 			1:
-				newEnemy = a_soldier.instance()
+				newEnemy = a_soldier.instantiate()
 			2:
-				newEnemy = b_soldier.instance()
+				newEnemy = b_soldier.instantiate()
 		
 		for adjCell in spawn_point.adjCells:
 			if adjCell.occupyingUnit == null:
 				newEnemy.get_node("AI").ai_type = "Aggresive"
-				BattlefieldInfo.current_level.get_node("YSort").add_child(newEnemy)
+				BattlefieldInfo.current_level.get_node("Node2D").add_child(newEnemy)
 				
 				# Set Stats and position
 				newEnemy.position = adjCell.position

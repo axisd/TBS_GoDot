@@ -1,3 +1,4 @@
+@tool
 # The MIT License (MIT)
 #
 # Copyright (c) 2018 George Marques
@@ -20,11 +21,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-tool
 extends Object
 
 func load_image(rel_path, source_path, options):
-	var flags = options.image_flags if "image_flags" in options else Texture.FLAGS_DEFAULT
+	var flags = options.image_flags if "image_flags" in options else 0
 	var embed = options.embed_internal_images if "embed_internal_images" in options else false
 
 	var ext = rel_path.get_extension().to_lower()
@@ -34,11 +34,10 @@ func load_image(rel_path, source_path, options):
 
 	var total_path = rel_path
 	if rel_path.is_rel_path():
-		total_path = ProjectSettings.globalize_path(source_path.get_base_dir()).plus_file(rel_path)
+		total_path = ProjectSettings.globalize_path(source_path.get_base_dir()).path_join(rel_path)
 	total_path = ProjectSettings.localize_path(total_path)
 
-	var dir = Directory.new()
-	if not dir.file_exists(total_path):
+	if not FileAccess.file_exists(total_path):
 		printerr("Image not found: %s" % [total_path])
 		return ERR_FILE_NOT_FOUND
 

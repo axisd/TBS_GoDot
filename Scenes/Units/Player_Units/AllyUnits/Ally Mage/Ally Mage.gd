@@ -1,6 +1,9 @@
 extends Battlefield_Unit
 
 func _ready():
+	# Load base class variable
+	super()
+	
 	# Initial Animation
 	$Animation.current_animation = "Idle"
 	
@@ -14,7 +17,7 @@ func _ready():
 	
 	# Weapons and Inventory
 	UnitInventory.usable_weapons.append(Item.WEAPON_TYPE.ELEMENTAL)
-	UnitInventory.add_item(preload("res://Scenes/Items/Tomes/Fire.tscn").instance())
+	UnitInventory.add_item(preload("res://Scenes/Items/Tomes/Fire.tscn").instantiate())
 	
 	# Set combat node
 	combat_node = preload("res://Scenes/Units/Player_Units/AllyUnits/Ally Mage/Ally Mage Combat.tscn")

@@ -18,8 +18,9 @@ func _init():
 	]
 	
 	# Signals needed
-	WorldMapScreen.get_node("Eirika/Eirika Tween").connect("tween_completed", self, "after_eirika_move")
-	WorldMapScreen.get_node("Message System").connect("no_more_text", self, "after_text")
+	var tween = get_tree().create_tween()
+	tween.tween_callback(Callable(self, "after_eirika_move")).set_delay(1)
+	WorldMapScreen.get_node("Message System").no_more_text.connect(after_text)
 	
 	# Set text position bottom
 	WorldMapScreen.get_node("Message System").set_position(Messaging_System.BOTTOM)
@@ -34,7 +35,7 @@ func run():
 	WorldMapScreen.get_node("Eirika").position = eirika_initial
 	
 	# 1.5 second pause
-	yield(get_tree().create_timer(2), "timeout")
+	await get_tree().create_timer(2).timeout
 	
 	# Move Eirika and start text
 	WorldMapScreen.get_node("Message System").start(text_array)
@@ -50,9 +51,9 @@ func build_map():
 		WorldMapScreen.place_fort_waypoint(f_waypoint)
 
 func after_text():
-	yield(get_tree().create_timer(0.5), "timeout")
-	SceneTransition.change_scene("res://Scenes/Chapter/Chapter Background.tscn", 0.1)
+	await get_tree().create_timer(0.5).timeout
+	SceneTransition.change_scene_to_file("res://Scenes/Chapter/Chapter Background.tscn", 0.1)
 	WorldMapScreen.exit()
-	yield(SceneTransition, "scene_changed")
-	SceneTransition.get_tree().current_scene.start("4", "Scourge of the Sea", level4, 2)
+	await SceneTransition.scene_changed
+	SceneTransition.get_tree().current_scene.start(Callable("4", "Scourge of the Sea").bind(level4), 2)
 	queue_free()

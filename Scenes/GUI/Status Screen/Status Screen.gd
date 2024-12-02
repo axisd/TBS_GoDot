@@ -4,22 +4,22 @@ extends CanvasLayer
 const full_bar_width = 237
 
 # Play Time
-var time_start = 0
-var time_now = 0
-var saved_time = 0
-var elapsed = 0
-var current_play_session = 0
+var time_start : int = 0
+var time_now : int = 0
+var saved_time : int = 0
+var elapsed : int = 0
+var current_play_session : int = 0
 
 func _ready():
 	set_process_input(false)
 	
 	# Play Time
-	time_start = OS.get_unix_time()
+	time_start = Time.get_unix_time_from_system()
 	set_process(true)
 
 func _process(delta):
 	# Time Played
-	time_now = OS.get_unix_time()
+	time_now = Time.get_unix_time_from_system()
 	current_play_session = time_now - time_start
 	elapsed = (time_now - time_start) + saved_time
 	var minutes = elapsed / 60
@@ -36,7 +36,7 @@ func start():
 	
 	# Play animation
 	$Anim.play("Fade")
-	yield($Anim, "animation_finished")
+	await $Anim.animation_finished
 	
 	# Allow input
 	set_process_input(true)
@@ -46,7 +46,7 @@ func _input(event):
 		set_process_input(false)
 		
 		$Anim.play_backwards("Fade")
-		yield($Anim, "animation_finished")
+		await $Anim.animation_finished
 		
 		# Head back
 		BattlefieldInfo.cursor.back_to_move()

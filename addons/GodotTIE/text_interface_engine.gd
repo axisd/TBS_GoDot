@@ -18,36 +18,36 @@ const BUFF_BREAK = 3
 const BUFF_INPUT = 4
 const BUFF_CLEAR = 5
 
-onready var _buffer = [] # 0 = Debug; 1 = Text; 2 = Silence; 3 = Break; 4 = Input
-onready var _label = Label.new() # The Label in which the text is going to be displayed
-onready var _state = 0 # 0 = Waiting; 1 = Output; 2 = Input
+@onready var _buffer = [] # 0 = Debug; 1 = Text; 2 = Silence; 3 = Break; 4 = Input
+@onready var _label = Label.new() # The Label in which the text is going to be displayed
+@onready var _state = 0 # 0 = Waiting; 1 = Output; 2 = Input
 
-onready var _output_delay = 0
-onready var _output_delay_limit = 0
-onready var _on_break = false
-onready var _max_lines_reached = false
-onready var _buff_beginning = true
-onready var _turbo = false
-onready var _max_lines = 0
-onready var _break_key = KEY_ENTER
+@onready var _output_delay = 0
+@onready var _output_delay_limit = 0
+@onready var _on_break = false
+@onready var _max_lines_reached = false
+@onready var _buff_beginning = true
+@onready var _turbo = false
+@onready var _max_lines = 0
+@onready var _break_key = KEY_ENTER
 
-onready var _blink_input_visible = false
-onready var _blink_input_timer = 0
-onready var _input_timer_limit = 1
-onready var _input_index = 0
+@onready var _blink_input_visible = false
+@onready var _blink_input_timer = 0
+@onready var _input_timer_limit = 1
+@onready var _input_index = 0
 
 # =============================================== 
 # Text display properties!
-export(bool) var SCROLL_ON_MAX_LINES = true # If this is true, the text buffer update will stop after reaching the maximum number of lines; else, it will stop to wait for user input, and than clear the text.
-export(bool) var BREAK_ON_MAX_LINES = true # If the text output pauses waiting for the user when reaching the maximum number of lines
-export(bool) var AUTO_SKIP_WORDS = true # If words that dont fit the line only start to be printed on next line
-export(bool) var LOG_SKIPPED_LINES = true # false = delete every line that is not showing on screen
-export(bool) var SCROLL_SKIPPED_LINES = false # if the user will be able to scroll through the skipped lines; weird stuff can happen if this and BREAK_ON_MAX_LINE/LOG_SKIPPED_LINES
-export(Font) var FONT
+@export var SCROLL_ON_MAX_LINES: bool = true # If this is true, the text buffer update will stop after reaching the maximum number of lines; else, it will stop to wait for user input, and than clear the text.
+@export var BREAK_ON_MAX_LINES: bool = true # If the text output pauses waiting for the user when reaching the maximum number of lines
+@export var AUTO_SKIP_WORDS: bool = true # If words that dont fit the line only start to be printed on next line
+@export var LOG_SKIPPED_LINES: bool = true # false = delete every line that is not showing on screen
+@export var SCROLL_SKIPPED_LINES: bool = false # if the user will be able to scroll through the skipped lines; weird stuff can happen if this and BREAK_ON_MAX_LINE/LOG_SKIPPED_LINES
+@export var FONT: Font
 # Text input properties!
-export(bool) var PRINT_INPUT = true # If the input is going to be printed
-export(bool) var BLINKING_INPUT = true # If there is a _ blinking when input is appropriate
-export(int) var INPUT_CHARACTERS_LIMIT = -1 # If -1, there'll be no limits in the number of characters
+@export var PRINT_INPUT: bool = true # If the input is going to be printed
+@export var BLINKING_INPUT: bool = true # If there is a _ blinking when input is appropriate
+@export var INPUT_CHARACTERS_LIMIT: int = -1 # If -1, there'll be no limits in the number of characters
 # Signals!
 signal input_enter(input) # When user finished an input
 signal buff_end() # When there is no more outputs in _buffer
@@ -135,15 +135,15 @@ func set_turbomode(s): # Print stuff in the maximum velocity and ignore breaks
 # Careful when changing fonts on-the-fly! It might break the text if there is something
 # already printed!
 func set_font_bypath(str_path): # Changes the font of the text; weird stuff will happen if you use this function after text has been printed
-	_label.add_font_override("font",load(str_path))
+	_label.add_theme_font_override("font",load(str_path))
 	_max_lines = floor(get_size().y/(_label.get_line_height()+_label.get_constant("line_spacing")))
 
 func set_font_byresource(font): # Changes font of the text (uses the resource)
-	_label.add_font_override("font", font)
+	_label.add_theme_font_override("font", font)
 	_max_lines = floor(get_size().y/(_label.get_line_height()+_label.get_constant("line_spacing")))
 
 func set_color(c): # Changes the color of the text
-	_label.add_color_override("font_color", c)
+	_label.add_theme_color_override("font_color", c)
 
 func set_state(i): # Changes the state of the Text Interface Engine
 	emit_signal("state_change", int(i))
@@ -153,7 +153,7 @@ func set_state(i): # Changes the state of the Text Interface Engine
 	if(i == 2): # Set input index to last character on the label
 		_input_index = _label.get_text().length()
 
-func set_break_key_by_scancode(i): # Set a new key to resume breaks (uses scancode!)
+func set_break_key_by_scancode(i): # Set a new key to resume breaks (uses keycode!)
 	_break_key = i
 
 func set_buff_speed(v): # Changes the velocity of the text being printed
@@ -172,12 +172,12 @@ func _ready():
 	
 	# Setting font of the text
 	if(FONT != null):
-		_label.add_font_override("font", FONT)
+		_label.add_theme_font_override("font", FONT)
 	
 	# Setting size of the frame
 	_max_lines = floor(get_size().y/(_label.get_line_height()+_label.get_constant("line_spacing")))
 	_label.set_size(Vector2(get_size().x,get_size().y))
-	_label.set_autowrap(true)
+	_label.set_autowrap_mode(TextServer.AUTOWRAP_WORD)
 
 func _physics_process(delta):
 	if(_state == STATE_OUTPUT): # Output
@@ -280,15 +280,15 @@ func _physics_process(delta):
 
 func _input(event):
 	if(event is InputEventKey and event.is_pressed() == true ):
-		if(SCROLL_SKIPPED_LINES and event.scancode == KEY_UP or event.scancode == KEY_DOWN): # User is just scrolling the text
-			if(event.scancode == KEY_UP):
+		if(SCROLL_SKIPPED_LINES and event.keycode == KEY_UP or event.keycode == KEY_DOWN): # User is just scrolling the text
+			if(event.keycode == KEY_UP):
 				if(_label.get_lines_skipped() > 0):
 					_label.set_lines_skipped(_label.get_lines_skipped()-1)
 			else:
 				if(_label.get_lines_skipped() < _label.get_line_count()-_max_lines):
 					_label.set_lines_skipped(_label.get_lines_skipped()+1)
 		elif(_state == 1 and _on_break): # If its on a break
-			if(event.scancode == _break_key):
+			if(event.keycode == _break_key):
 				emit_signal("resume_break")
 				_buffer.pop_front() # Pop out break buff
 				_on_break = false
@@ -299,9 +299,9 @@ func _input(event):
 			var input = _label.get_text().right(_input_index) # Get Input
 			input = input.replace("\n","")
 
-			if(event.scancode == KEY_BACKSPACE): # Delete last character
+			if(event.keycode == KEY_BACKSPACE): # Delete last character
 				_delete_last_character(true)
-			elif(event.scancode == KEY_ENTER): # Finish input
+			elif(event.keycode == KEY_ENTER): # Finish input
 				emit_signal("input_enter", input)
 				if(!PRINT_INPUT): # Delete input
 					var i = _label.get_text().length() - _input_index

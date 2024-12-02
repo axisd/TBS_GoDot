@@ -33,10 +33,10 @@ func _init():
 
 func start():
 	# Register to the dialogue system
-	BattlefieldInfo.message_system.connect("no_more_text", self, "move_actors")
+	BattlefieldInfo.message_system.connect("no_more_text", Callable(self, "move_actors"))
 	
 	# Register to the movement
-	BattlefieldInfo.movement_system_cinematic.connect("unit_finished_moving_cinema", self, "move_camera")
+	BattlefieldInfo.movement_system_cinematic.connect("unit_finished_moving_cinema", Callable(self, "move_camera"))
 	
 	# Show allies
 	ewan = BattlefieldInfo.ally_units["Ewan"]
@@ -85,6 +85,9 @@ func move_camera():
 	var new_position_for_camera = Vector2(0,190)
 	
 	# Move Camera
-	BattlefieldInfo.main_game_camera.get_node("Tween").connect("tween_all_completed", self, "event_complete")
-	BattlefieldInfo.main_game_camera.get_node("Tween").interpolate_property(BattlefieldInfo.main_game_camera, "position", BattlefieldInfo.main_game_camera.position, new_position_for_camera, 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	BattlefieldInfo.main_game_camera.get_node("Tween").start()
+	BattlefieldInfo.main_game_camera.camera_tween.finished.connect(event_complete)
+	BattlefieldInfo.main_game_camera.camera_tween \
+		.tween_property(BattlefieldInfo.main_game_camera, "position", \
+			Tween.interpolate_value(BattlefieldInfo.main_game_camera.position, new_position_for_camera - BattlefieldInfo.main_game_camera.position, 0.5, 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT), \
+			1)
+	BattlefieldInfo.main_game_camera.camera_tween.play()
