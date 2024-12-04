@@ -8,9 +8,9 @@ var item_selected = null
 var item_index = 0
 
 # Node access
-onready var label = $"Item Label"
-onready var item_list_node = $"Item List" 
-onready var item_tree_node = $"Item Tree"
+@onready var label = $"Item Label"
+@onready var item_list_node = $"Item List" 
+@onready var item_tree_node = $"Item Tree"
 
 # Convoy access
 var convoy
@@ -116,7 +116,7 @@ func allow_input():
 
 func disable_input():
 	item_list_node.focus_mode = Control.FOCUS_NONE
-	item_list_node.unselect_all()
+	item_list_node.deselect_all()
 	item_list_node.release_focus()
 	item_list_node.set_process_input(false)
 	

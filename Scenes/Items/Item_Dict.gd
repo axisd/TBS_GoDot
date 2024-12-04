@@ -1,4 +1,4 @@
-extends Reference
+extends RefCounted
 
 class_name ALL_ITEMS_REF
 
@@ -41,6 +41,6 @@ func get_item(item_id):
 # Create an item
 func create_item(item_id):
 	var item = load(item_id)
-	var new_item = item.instance()
+	var new_item = item.instantiate()
 	
 	return new_item

@@ -17,14 +17,14 @@ func _ready():
 	# Weapons and Inventory
 	UnitInventory.usable_weapons.append(Item.WEAPON_TYPE.SWORD)
 	UnitInventory.usable_weapons.append(Item.WEAPON_TYPE.LANCE)
-	UnitInventory.add_item(preload("res://Scenes/Items/Lance/Silver Lance.tscn").instance())
-	UnitInventory.add_item(preload("res://Scenes/Items/Swords/Steel Sword.tscn").instance())
-	UnitInventory.add_item(preload("res://Scenes/Items/Lance/Iron Lance.tscn").instance())
+	UnitInventory.add_item(preload("res://Scenes/Items/Lance/Silver Lance.tscn").instantiate())
+	UnitInventory.add_item(preload("res://Scenes/Items/Swords/Steel Sword.tscn").instantiate())
+	UnitInventory.add_item(preload("res://Scenes/Items/Lance/Iron Lance.tscn").instantiate())
 	
 	# Delete later
-	UnitInventory.add_item(preload("res://Scenes/Items/Lance/Silver Lance.tscn").instance())
-	UnitInventory.add_item(preload("res://Scenes/Items/Swords/Steel Sword.tscn").instance())
-	UnitInventory.add_item(preload("res://Scenes/Items/Lance/Iron Lance.tscn").instance())
+	UnitInventory.add_item(preload("res://Scenes/Items/Lance/Silver Lance.tscn").instantiate())
+	UnitInventory.add_item(preload("res://Scenes/Items/Swords/Steel Sword.tscn").instantiate())
+	UnitInventory.add_item(preload("res://Scenes/Items/Lance/Iron Lance.tscn").instantiate())
 	
 	# River penalty test
 	UnitMovementStats.riverPenalty = 3

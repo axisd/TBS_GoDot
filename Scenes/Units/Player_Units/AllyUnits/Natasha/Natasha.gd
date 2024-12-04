@@ -18,7 +18,7 @@ func _ready():
 	UnitInventory.usable_weapons.append(Item.WEAPON_TYPE.HEALING)
 	
 	# Add Healing Staff
-	UnitInventory.add_item(preload("res://Scenes/Items/Staves/Heal.tscn").instance())
+	UnitInventory.add_item(preload("res://Scenes/Items/Staves/Heal.tscn").instantiate())
 	
 	# Set combat node
 	combat_node = preload("res://Scenes/Units/Player_Units/AllyUnits/Natasha/Natasha Combat.tscn")

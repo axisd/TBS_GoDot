@@ -13,7 +13,7 @@ func _ready():
 	
 	# Inventory and Weapons
 	UnitInventory.usable_weapons.append(Item.WEAPON_TYPE.DARK)
-	UnitInventory.add_item(preload("res://Scenes/Items/Tomes/Flux.tscn").instance())
+	UnitInventory.add_item(preload("res://Scenes/Items/Tomes/Flux.tscn").instantiate())
 	
 	# Combat sprite
 	combat_node = preload("res://Scenes/Units/Enemy_Units/Dark Mage Enemy Combat.tscn")

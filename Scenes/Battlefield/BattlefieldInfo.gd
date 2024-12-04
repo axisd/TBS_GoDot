@@ -74,7 +74,7 @@ var combat_player_unit
 var combat_ai_unit
 
 # Player units
-onready var y_sort_player_party
+@onready var y_sort_player_party
 
 # Game Over
 var game_over = false
@@ -141,35 +141,35 @@ func _ready():
 	add_child(movement_system_cinematic)
 	
 	# Turn Manager
-	turn_manager = preload("res://Engine/Systems/Turn Manager.tscn").instance()
+	turn_manager = preload("res://Engine/Systems/Turn Manager.tscn").instantiate()
 	add_child(turn_manager)
 	
 	# Music player
-	music_player = preload("res://Scenes/Audio/MusicPlayer.tscn").instance()
+	music_player = preload("res://Scenes/Audio/MusicPlayer.tscn").instantiate()
 	add_child(music_player)
 	
 	# Battle Sounds
-	battle_sounds = preload("res://Scenes/Audio/Battle Sounds.tscn").instance()
+	battle_sounds = preload("res://Scenes/Audio/Battle Sounds.tscn").instantiate()
 	add_child(battle_sounds)
 	
 	# Weapon Sounds
-	weapon_sounds = preload("res://Scenes/Audio/Weapon Sounds.tscn").instance()
+	weapon_sounds = preload("res://Scenes/Audio/Weapon Sounds.tscn").instantiate()
 	add_child(weapon_sounds)
 	
 	# Extra sounds
-	extra_sound_effects = preload("res://Scenes/Audio/Extra Sound Effects.tscn").instance()
+	extra_sound_effects = preload("res://Scenes/Audio/Extra Sound Effects.tscn").instantiate()
 	add_child(extra_sound_effects)
 	
 	# Map Updater
-	tile_unit_updater = preload("res://Engine/Systems/TileUnitUpdater.tscn").instance()
+	tile_unit_updater = preload("res://Engine/Systems/TileUnitUpdater.tscn").instantiate()
 	add_child(tile_unit_updater)
 	
 	# Victory Checker
-	victory_system = preload("res://Engine/Systems/Victory Checker.tscn").instance()
+	victory_system = preload("res://Engine/Systems/Victory Checker.tscn").instantiate()
 	add_child(victory_system)
 	
 	# Player sort
-	y_sort_player_party = $YSort
+	y_sort_player_party = $Node2D
 	
 	# Databases
 	item_database = ALL_ITEMS_REF.new()
@@ -189,7 +189,7 @@ func _input(event):
 	
 	# Debug for orphan nodes
 	if Input.is_action_just_pressed("debug"):
-		print_stray_nodes()
+		print_orphan_nodes()
 	
 	if Input.is_action_just_pressed("exit_game"):
 		get_tree().quit()
@@ -238,7 +238,7 @@ func start_level():
 		
 		# Clear Fade
 		battlefield_container.get_node("Anim").play("Fade")
-		yield(battlefield_container.get_node("Anim"), "animation_finished")
+		await battlefield_container.get_node("Anim").animation_finished
 		
 		# Start level
 		turn_transition.start_level()

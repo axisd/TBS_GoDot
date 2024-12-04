@@ -1,8 +1,8 @@
 extends Control
 
 # Node access
-onready var inventory_list = $"Background Color/Inventory List"
-onready var unit_name = $"Background Color/Unit Name"
+@onready var inventory_list = $"Background Color/Inventory List"
+@onready var unit_name = $"Background Color/Unit Name"
 
 # Array that holds all the items from said unit
 var unit_inventory = []
@@ -22,7 +22,7 @@ func _ready():
 	# Disable input at the start
 	set_process_input(false)
 	inventory_list.focus_mode = Control.FOCUS_NONE
-	inventory_list.unselect_all()
+	inventory_list.deselect_all()
 	inventory_list.release_focus()
 	
 	# Hide Scroll bar
@@ -48,7 +48,7 @@ func start(unit):
 	visible = true
 	
 	$Anim.play("Fade")
-	yield($Anim,"animation_finished")
+	await $Anim.animation_finished
 	
 	# Set the name of inventory box
 	unit_name.text = str(unit.UnitStats.name, "'s Inventory")
@@ -98,13 +98,13 @@ func disallow_input():
 	set_process_input(false)
 	inventory_list.focus_mode = Control.FOCUS_NONE
 	inventory_list.release_focus()
-	inventory_list.unselect_all()
+	inventory_list.deselect_all()
 	
 
 func exit():
 	# Fade
 	$Anim.play_backwards("Fade")
-	yield($Anim,"animation_finished")
+	await $Anim.animation_finished
 	
 	# Hide the UI
 	visible = false

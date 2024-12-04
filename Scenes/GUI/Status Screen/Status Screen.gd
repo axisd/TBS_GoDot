@@ -14,12 +14,12 @@ func _ready():
 	set_process_input(false)
 	
 	# Play Time
-	time_start = OS.get_unix_time()
+	time_start = Time.get_unix_time_from_system()
 	set_process(true)
 
 func _process(delta):
 	# Time Played
-	time_now = OS.get_unix_time()
+	time_now = Time.get_unix_time_from_system()
 	current_play_session = time_now - time_start
 	elapsed = (time_now - time_start) + saved_time
 	var minutes = elapsed / 60
@@ -36,7 +36,7 @@ func start():
 	
 	# Play animation
 	$Anim.play("Fade")
-	yield($Anim, "animation_finished")
+	await $Anim.animation_finished
 	
 	# Allow input
 	set_process_input(true)
@@ -46,7 +46,7 @@ func _input(event):
 		set_process_input(false)
 		
 		$Anim.play_backwards("Fade")
-		yield($Anim, "animation_finished")
+		await $Anim.animation_finished
 		
 		# Head back
 		BattlefieldInfo.cursor.back_to_move()
