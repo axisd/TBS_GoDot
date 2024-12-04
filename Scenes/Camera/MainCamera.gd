@@ -3,22 +3,24 @@ extends Camera2D
 class_name MainCamera
 
 # Areas
-const CAMERA_CURSOR_DIFFERENTIAL_FACTOR = 1
-const CAMERA_CURSOR_EXTRA_DIFF = 0
-const CAMERA_WIDTH = 240
-const CAMERA_HEIGTH = 160
+const CAMERA_CURSOR_DIFFERENTIAL_FACTOR : int = 1
+const CAMERA_CURSOR_EXTRA_DIFF : int = 0
+const CAMERA_WIDTH : int = 240
+const CAMERA_HEIGTH : int = 160
 var RIGHT_CLAMP_MAX
 var BOTTOM_CLAMP_MAX
 
 # Camera Shake
-var _duration = 0.0
-var _period_in_ms = 0.0
-var _amplitude = 0.0
-var _timer = 0.0
-var _last_shook_timer = 0
-var _previous_x = 0.0
-var _previous_y = 0.0
-var _last_offset = Vector2(0, 0)
+var _duration : float = 0.0
+var _period_in_ms : float = 0.0
+var _amplitude : float = 0.0
+var _timer : float = 0.0
+var _last_shook_timer : float = 0
+var _previous_x : float = 0.0
+var _previous_y : float = 0.0
+var _last_offset : Vector2 = Vector2(0, 0)
+
+@onready var camera_tween : Tween = get_tree().create_tween()
 
 signal camera_moved
 
@@ -27,7 +29,7 @@ func _ready():
 	BattlefieldInfo.main_game_camera = self
 	
 	# Check if connected -> No idea why my two levels are bugged and the rest are okay.
-	BattlefieldInfo.cursor.connect("cursorMoved", Callable(self, "_on_Cursor_cursorMoved"))
+	BattlefieldInfo.cursor.cursorMoved.connect(_on_Cursor_cursorMoved)
 	
 	# Camera Shake for battle effect
 	set_process(true)

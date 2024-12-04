@@ -30,10 +30,10 @@ var current_option_selected = "Wait"
 
 func _ready():
 	# Connect to Cursor
-	get_parent().get_node("GameCamera/Areas/BottomLeft").connect("body_entered", Callable(self, "left_side"))
-	get_parent().get_node("GameCamera/Areas/BottomRight").connect("body_entered", Callable(self, "right_side"))
-	get_parent().get_node("GameCamera/Areas/TopLeft").connect("body_entered", Callable(self, "left_side"))
-	get_parent().get_node("GameCamera/Areas/TopRight").connect("body_entered", Callable(self, "right_side"))
+	get_parent().get_node("GameCamera/Areas/BottomLeft").body_entered.connect(left_side)
+	get_parent().get_node("GameCamera/Areas/BottomRight").body_entered.connect(right_side)
+	get_parent().get_node("GameCamera/Areas/TopLeft").body_entered.connect(left_side)
+	get_parent().get_node("GameCamera/Areas/TopRight").body_entered.connect(right_side)
 	
 	BattlefieldInfo.unit_movement_system.connect("action_selector_screen", Callable(self, "start"))
 

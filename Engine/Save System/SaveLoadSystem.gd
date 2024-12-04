@@ -15,8 +15,7 @@ func save_game():
 	print("Starting to save...")
 	
 	# Open new file
-	var save_game_file = File.new()
-	save_game_file.open("res://Save/save_game_file.save", File.WRITE)
+	var save_game_file = FileAccess.open("res://Save/save_game_file.save", FileAccess.WRITE)
 	
 	# Save current money
 	save_money(save_game_file)
@@ -46,8 +45,7 @@ func save_game():
 
 func load_game():
 	# Check if we have a save file
-	var saved_game = File.new()
-	if !saved_game.file_exists("res://Save/save_game_file.save"):
+	if !FileAccess.file_exists("res://Save/save_game_file.save"):
 		print("No save file found!")
 		return
 	
@@ -55,7 +53,7 @@ func load_game():
 	var saved_data = []
 	
 	# Load file
-	saved_game.open("res://Save/save_game_file.save", File.READ)
+	var saved_game = FileAccess.open("res://Save/save_game_file.save", FileAccess.READ)
 	
 	# Load all data from the file
 	while saved_game.get_position() < saved_game.get_length():

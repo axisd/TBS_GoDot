@@ -22,13 +22,12 @@ func _ready():
 	unit_list.release_focus()
 	
 	# Hide Scroll bar
-	unit_list.get_v_scroll().mouse_filter = Control.MOUSE_FILTER_IGNORE
-	unit_list.get_v_scroll().modulate = Color(1,1,1,0)
+	unit_list.get_v_scroll_bar().mouse_filter = Control.MOUSE_FILTER_IGNORE
+	unit_list.get_v_scroll_bar().modulate = Color(1,1,1,0)
 	
 	# Test adding units
 	# Eirika Test
-	var eririka_path = load("res://Scenes/Units/Player_Units/AllyUnits/Eirika/Eirika.tscn")
-	var eirika_t = eririka_path.instantiate()
+	var eirika_t = load("res://Scenes/Units/Player_Units/AllyUnits/Eirika/Eirika.tscn").instantiate()
 	$"TEST NODE".add_child(eirika_t)
 	eirika_t.visible = false
 	eirika_t.UnitStats.identifier = "Eirika"

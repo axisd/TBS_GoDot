@@ -7,7 +7,7 @@ class_name Unit_Stats
 var identifier
 
 # UI attributes
-var name
+var name : String
 var class_type
 
 # Level

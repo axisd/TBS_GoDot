@@ -11,18 +11,18 @@ const full_bar_width = 237
 
 func _ready():
 	# Connect the cursor movement signal and turning off
-	get_parent().get_node("Cursor").connect("cursorMoved", Callable(self, "update_battlefield_ui"))
-	get_parent().get_node("Cursor").connect("turn_off_ui", Callable(self, "turn_off_battlefield_ui"))
-	get_parent().get_node("Cursor").connect("turn_on_ui", Callable(self, "turn_on_battlefield_ui"))
+	get_parent().get_node("Cursor").cursorMoved.connect(update_battlefield_ui)
+	get_parent().get_node("Cursor").turn_off_ui.connect(turn_off_battlefield_ui)
+	get_parent().get_node("Cursor").turn_on_ui.connect(turn_on_battlefield_ui)
 	
 	# Connect cursor to the Area
-	get_parent().get_node("GameCamera/Areas/BottomLeft").connect("body_entered", Callable(self, "bottom_left"))
-	get_parent().get_node("GameCamera/Areas/BottomRight").connect("body_entered", Callable(self, "bottom_right"))
-	get_parent().get_node("GameCamera/Areas/TopLeft").connect("body_entered", Callable(self, "top_left"))
-	get_parent().get_node("GameCamera/Areas/TopRight").connect("body_entered", Callable(self, "top_right"))
+	get_parent().get_node("GameCamera/Areas/BottomLeft").body_entered.connect(bottom_left)
+	get_parent().get_node("GameCamera/Areas/BottomRight").body_entered.connect(bottom_right)
+	get_parent().get_node("GameCamera/Areas/TopLeft").body_entered.connect(top_left)
+	get_parent().get_node("GameCamera/Areas/TopRight").body_entered.connect(top_right)
 	
 	# Connect to Action selector
-	get_parent().get_node("Action Selector Screen").connect("selected_wait", Callable(self, "turn_on_battlefield_ui"))
+	get_parent().get_node("Action Selector Screen").selected_wait.connect(turn_on_battlefield_ui)
 	
 	# Initial Quandrant and previous
 	cursor_quadrant = TOP_LEFT

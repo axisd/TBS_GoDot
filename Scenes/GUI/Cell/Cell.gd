@@ -67,4 +67,4 @@ func getPosition() -> Vector2:
 
 func toString() -> String:
 	return "Cell data: {position} TileName: {tileName} Avoidance: {avd} DefBonus: {def} MoveCost: {mvd} OccuypingUnit: {oUnit}" \
-	super.format({"position":str(cellPosition),"tileName": tileName, "avd": avoidanceBonus, "def": defenseBonus, "mvd" : movementCost, "oUnit" : self.occupyingUnit})
+		.format({"position":str(cellPosition),"tileName": tileName, "avd": avoidanceBonus, "def": defenseBonus, "mvd" : movementCost, "oUnit" : self.occupyingUnit})

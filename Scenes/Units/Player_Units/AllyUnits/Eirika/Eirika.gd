@@ -1,6 +1,9 @@
 extends Battlefield_Unit
 
 func _ready():
+	# Load base class variable
+	super()
+	
 	# Initial Animation
 	$Animation.current_animation = "Idle"
 	

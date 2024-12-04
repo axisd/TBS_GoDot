@@ -4,18 +4,18 @@ extends Node
 #########
 
 # Systems needed for the battlefield
-var unit_movement_system
-var movement_calculator
-var turn_manager
-var combat_screen
-var tile_unit_updater
+var unit_movement_system : Unit_Movement_System
+var movement_calculator : MovementCalculator
+var turn_manager : Node
+var combat_screen : Combat_Screen
+var tile_unit_updater : Node
 
 # Cinematic Systems
-var message_system
-var main_game_camera
-var turn_transition
-var event_system
-var movement_system_cinematic
+var message_system : Messaging_System
+var main_game_camera : MainCamera
+var turn_transition # : TurnTransition
+var event_system : Event_System
+var movement_system_cinematic : Unit_Movement_System_Cinematic
 
 # Level
 var current_level # Level from TMX Files
@@ -23,19 +23,19 @@ var battlefield_container # Entire chapter
 var level_container # Container for level
 
 # Sound and music
-var music_player
+var music_player : Node
 var battle_sounds
 var weapon_sounds
 var extra_sound_effects
 
 # Victory Condition
-var victory_text = "Defeat all enemies"
+var victory_text : String = "Defeat all enemies"
 
 # Victory System
 var victory_system
 
 # Save/Load System
-var save_load_system
+var save_load_system : SaveLoadSystem
 
 #############################
 # GLOBAL GAMEPLAY VARIABLES #
@@ -44,27 +44,27 @@ var save_load_system
 var current_Unit_Selected: Node2D
 
 # Previous position in order to be able to go back
-var previous_position = Vector2(0,0)
+var previous_position : Vector2 = Vector2(0,0)
 
 # Previous camera position
-var previous_camera_position = Vector2(0,0)
+var previous_camera_position : Vector2 = Vector2(0,0)
 
 # Map Info
-var grid = []
-var map_height
-var map_width
+var grid : Array = []
+var map_height : int
+var map_width : int
 
 # Battlefield Unit Info
-var ally_units = {}
-var ally_units_not_in_battle = {}
-var enemy_units = {}
+var ally_units : Dictionary = {}
+var ally_units_not_in_battle : Dictionary = {}
+var enemy_units : Dictionary = {}
 
 # Spawn points
-var spawn_points = []
-var swap_points = []
+var spawn_points : Array = []
+var swap_points : Array = []
 
 # Eirika for AI purposes
-var Eirika
+var Eirika : Battlefield_Unit
 
 # Enemy commander for status screen
 var enemy_commander
@@ -74,28 +74,28 @@ var combat_player_unit
 var combat_ai_unit
 
 # Player units
-@onready var y_sort_player_party
+@onready var y_sort_player_party : Node2D
 
 # Game Over
-var game_over = false
+var game_over : bool = false
 
 # Victory
-var victory = false
+var victory : bool = false
 
 # Prevent end of turn
-var stop_end_of_turn = false
+var stop_end_of_turn : bool = false
 
 # Convoy
 var convoy
 
 # Money
-var money = 4000
+var money : int = 4000
 
 ##################
 # DATABASES #
 ##################
 
-var item_database
+var item_database : ALL_ITEMS_REF
 
 ##################
 # ALL UI SCREENS #
@@ -169,7 +169,7 @@ func _ready():
 	add_child(victory_system)
 	
 	# Player sort
-	y_sort_player_party = $Node2D
+	y_sort_player_party = $YSort
 	
 	# Databases
 	item_database = ALL_ITEMS_REF.new()
@@ -207,10 +207,10 @@ func clear():
 	current_Unit_Selected = null
 	combat_ai_unit = null
 	combat_player_unit = null
-	grid = null
+	grid = []
 	map_height = 0
 	map_width = 0
-	enemy_units = null
+	enemy_units = {}
 	game_over = false
 	victory = false
 	enemy_commander = null

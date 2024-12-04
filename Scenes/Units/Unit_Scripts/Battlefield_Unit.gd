@@ -15,7 +15,7 @@ var animation_movement
 var UnitActionStatus
 
 # Unit Stats
-var UnitStats
+var UnitStats : Unit_Stats
 
 # Inventory
 var UnitInventory

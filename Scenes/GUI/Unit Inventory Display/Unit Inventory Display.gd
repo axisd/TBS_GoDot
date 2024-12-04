@@ -26,8 +26,8 @@ func _ready():
 	inventory_list.release_focus()
 	
 	# Hide Scroll bar
-	inventory_list.get_v_scroll().mouse_filter = Control.MOUSE_FILTER_IGNORE
-	inventory_list.get_v_scroll().modulate = Color(1,1,1,0)
+	inventory_list.get_v_scroll_bar().mouse_filter = Control.MOUSE_FILTER_IGNORE
+	inventory_list.get_v_scroll_bar().modulate = Color(1,1,1,0)
 
 
 func _input(event):

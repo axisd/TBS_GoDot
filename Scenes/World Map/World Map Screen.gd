@@ -8,19 +8,19 @@ var fort_waypoint_marker = preload("res://Scenes/World Map/World Map Icons/Fortr
 var village_waypoint_marker = preload("res://Scenes/World Map/World Map Icons/Village Icon.tscn")
 
 # Way Points Array
-var castle_waypoints = []
-var fort_waypoints = []
-var village_waypoints = []
+var castle_waypoints : Array = []
+var fort_waypoints : Array = []
+var village_waypoints : Array = []
 
 # Eirika
-var eirika_off_screen = Vector2(-300, -75)
+var eirika_off_screen : Vector2 = Vector2(-300, -75)
 
 # Script for the event on the world map
 var current_event
 
 func _ready():
-	$"Eirika/Eirika Tween".connect("tween_completed", Callable(self, "set_eirika_idle"))
-	$Eirika/Animation.play("Idle")
+	var tween = get_tree().create_tween()
+	tween.tween_callback(Callable(self, "set_eirika_idle")).set_delay(1)
 
 # Start this map
 func start():
@@ -85,13 +85,15 @@ func place_eirika(eirika_new_position):
 
 # Move Eirika to the new position
 func move_eirika(eirika_next_position, movement_seconds = 1):
-	$"Eirika/Eirika Tween".interpolate_property($Eirika, "position", $Eirika.position, eirika_next_position, movement_seconds, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	var tween : Tween = get_tree().create_tween()
+	tween.tween_property($Eirika, "position", \
+		Tween.interpolate_value($Eirika.position, eirika_next_position - $Eirika.position, movement_seconds / 2.0, movement_seconds, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT), movement_seconds)
 	# Play appropriate animation for Eirika
 	if $Eirika.position.x - eirika_next_position.x <= 0:
 		$Eirika/Animation.play("Right no sound")
 	else:
 		$Eirika/Animation.play("Left no sound")
-	$"Eirika/Eirika Tween".start()
+	tween.play()
 
 # Set Camera position
 func set_camera_position(new_camera_position):
@@ -99,11 +101,13 @@ func set_camera_position(new_camera_position):
 
 # Move the Camera
 func move_camera(camera_next_position, movement_seconds = 1):
-	$"World Map Cam/Cam Tween".interpolate_property($"World Map Cam", "position", $"World Map Cam".position, camera_next_position, movement_seconds, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$"World Map Cam/Cam Tween".start()
+	var tween : Tween = get_tree().create_tween()
+	tween.tween_property($"World Map Cam", "position", \
+		Tween.interpolate_value($"World Map Cam".position, camera_next_position - $"World Map Cam".position, movement_seconds / 2.0, movement_seconds, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT), movement_seconds)
+	tween.play()
 
 # Set Eirika Animation back to idle
-func set_eirika_idle(object, key):
+func set_eirika_idle():
 	$Eirika/Animation.play("Idle")
 
 # Stop Main camera
@@ -112,9 +116,11 @@ func stop_main_camera():
 
 # Use to cleanup anything from this screen
 func exit():
-	$Anim.play_backwards("Fade ")
-	$"World Map Music 1/Music Tween".interpolate_property($"World Map Music 1", "volume_db", 0.0, -80.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$"World Map Music 1/Music Tween".start()
+	$Anim.play_backwards("Fade")
+	var tween : Tween = get_tree().create_tween()
+	tween.tween_property($"World Map Music 1", "volume_db", \
+		Tween.interpolate_value(0.0, -80.0, 0.25, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT), 0.5)
+	tween.play()
 	await $Anim.animation_finished
 	$"World Map Music 1".stop()
 	current_event = null

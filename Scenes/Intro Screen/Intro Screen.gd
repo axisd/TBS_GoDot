@@ -1,14 +1,14 @@
 extends Control
 
 # No text background
-var no_text_background = preload("res://assets/intro screen/intro background no text.jpg")
+var no_text_background : Resource = preload("res://assets/intro screen/intro background no text.jpg")
 
 enum {INTRO, GAME_SELECT, WAIT}
 var current_state = INTRO
 
-var options = ["New Game", "Load Game", "Options Screen"]
-var current_option
-var current_option_number = 0
+var options : Array = ["New Game", "Load Game", "Options Screen"]
+var current_option : String
+var current_option_number : int = 0
 
 
 func _ready():
@@ -20,7 +20,7 @@ func _ready():
 	current_option = options[current_option_number]
 	
 	# Anim signal
-	$"Anim".connect("animation_finished", Callable(self, "allow_selection"))
+	$"Anim".animation_finished.connect(allow_selection)
 	
 	# No 3 houses
 	$"Intro Background".texture = no_text_background

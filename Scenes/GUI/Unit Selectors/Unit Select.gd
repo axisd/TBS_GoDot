@@ -31,7 +31,7 @@ var current_yes_no_option = 0
 
 func _ready():
 	# Disable the scroll bar
-	var scroll_bar = unit_list.get_v_scroll()
+	var scroll_bar = unit_list.get_v_scroll_bar()
 	scroll_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	scroll_bar.modulate = Color(1,1,1,0)
 	

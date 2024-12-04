@@ -2,6 +2,9 @@ extends Battlefield_Unit
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Load base class variable
+	super()
+	
 	# Unique Unit Stats
 	UnitMovementStats.movementSteps = 8
 	UnitStats.class_bonus_b = 60

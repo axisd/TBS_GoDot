@@ -19,8 +19,9 @@ func _init():
 	]
 	
 	# Signals needed
-	WorldMapScreen.get_node("Eirika/Eirika Tween").connect("tween_completed", Callable(self, "after_eirika_move"))
-	WorldMapScreen.get_node("Message System").connect("no_more_text", Callable(self, "after_text"))
+	var tween = get_tree().create_tween()
+	tween.tween_callback(Callable(self, "after_eirika_move")).set_delay(1)
+	WorldMapScreen.get_node("Message System").no_more_text.connect(after_text)
 	
 	# Set text position bottom
 	WorldMapScreen.get_node("Message System").set_position(Messaging_System.BOTTOM)
@@ -55,5 +56,5 @@ func after_text():
 	SceneTransition.change_scene_to_file("res://Scenes/Chapter/Chapter Background.tscn", 0.1)
 	WorldMapScreen.exit()
 	await SceneTransition.scene_changed
-	SceneTransition.get_tree().current_scene.start(Callable("2", "Fort Merceus").bind(level3), 2)
+	SceneTransition.get_tree().current_scene.start("2", "Fort Merceus", level3, 2)
 	queue_free()

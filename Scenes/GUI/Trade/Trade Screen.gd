@@ -54,8 +54,8 @@ func build_menu(unit):
 	$"Select Unit".position = Vector2(0,0)
 	
 	# Turn off cursor
-	for unit in list_of_tradable_units:
-		unit.get_node("Cursor Select").visible = false
+	for tradable_unit in list_of_tradable_units:
+		tradable_unit.get_node("Cursor Select").visible = false
 	
 	# Reslot
 	reslot_item_array()

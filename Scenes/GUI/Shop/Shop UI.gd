@@ -50,8 +50,8 @@ var item_to_sell = null
 @onready var shop_list = $"Shop UI/ShopList"
 @onready var shop_list_price = $"Shop UI/ShopListPrice"
 @onready var hand_selector = $"Hand Selector"
-@onready var scroll_bar = $"Shop UI/ShopList".get_v_scroll()
-@onready var scroll_bar2 = $"Shop UI/ShopListPrice".get_v_scroll()
+@onready var scroll_bar = $"Shop UI/ShopList".get_v_scroll_bar()
+@onready var scroll_bar2 = $"Shop UI/ShopListPrice".get_v_scroll_bar()
 @onready var shop_text = $"Shop UI/Shop Keeper Text Info"
 @onready var anim = $Anim
 @onready var hand_confirm = $"Shop UI/Hand Confirm"
@@ -88,7 +88,7 @@ func _ready():
 	scroll_bar2.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	# Signal for bar
-	shop_list.get_v_scroll().connect("value_changed", Callable(self, "_adjust_hand_value"))
+	shop_list.get_v_scroll_bar().value_changed.connect(_adjust_hand_value)
 	
 	# Set Hand
 	#hand_selector.rect_position = STARTING_HAND_POSITION

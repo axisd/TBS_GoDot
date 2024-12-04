@@ -58,9 +58,9 @@ var highlight_positions = false
 
 # Ready
 func _ready():
-	$"Combat Control/Combat UI/XP Screen".connect("done_adding_xp", Callable(self, "back_to_battlefield"))
-	$"Combat Control/Combat UI/Level Up Screen".connect("done_leveling_up", Callable(self, "back_to_battlefield"))
-	get_parent().get_parent().get_node("Message System").connect("no_more_text", Callable(self, "process_after_text")) # Change this later to accomodate boss units
+	$"Combat Control/Combat UI/XP Screen".done_adding_xp.connect(back_to_battlefield)
+	$"Combat Control/Combat UI/Level Up Screen".done_leveling_up.connect(back_to_battlefield)
+	get_parent().get_parent().get_node("Message System").no_more_text.connect(process_after_text) # Change this later to accomodate boss units
 	
 	BattlefieldInfo.combat_screen = self
 	set_process(true)
@@ -514,7 +514,7 @@ func set_background(tilename):
 			$"Combat Control/Background".texture = forest
 		"Fortress":
 			$"Combat Control/Background".texture = fortress
-		"Mountain" || "Hill":
+		"Mountain", "Hill":
 			$"Combat Control/Background".texture = mountain
 		"River":
 			$"Combat Control/Background".texture = river

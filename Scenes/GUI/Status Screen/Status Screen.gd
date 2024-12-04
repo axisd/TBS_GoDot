@@ -4,11 +4,11 @@ extends CanvasLayer
 const full_bar_width = 237
 
 # Play Time
-var time_start = 0
-var time_now = 0
-var saved_time = 0
-var elapsed = 0
-var current_play_session = 0
+var time_start : int = 0
+var time_now : int = 0
+var saved_time : int = 0
+var elapsed : int = 0
+var current_play_session : int = 0
 
 func _ready():
 	set_process_input(false)

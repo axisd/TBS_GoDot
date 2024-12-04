@@ -18,8 +18,9 @@ func _init():
 	]
 	
 	# Signals needed
-	WorldMapScreen.get_node("Eirika/Eirika Tween").connect("tween_completed", Callable(self, "after_eirika_move"))
-	WorldMapScreen.get_node("Message System").connect("no_more_text", Callable(self, "after_text"))
+	var tween = get_tree().create_tween()
+	tween.tween_callback(Callable(self, "after_eirika_move")).set_delay(1)
+	WorldMapScreen.get_node("Message System").no_more_text.connect(after_text)
 	
 	# Set text position bottom
 	WorldMapScreen.get_node("Message System").set_position(Messaging_System.BOTTOM)

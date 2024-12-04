@@ -18,8 +18,8 @@ var convoy
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Disable the Item List Stuff
-	item_list_node.get_v_scroll().mouse_filter = Control.MOUSE_FILTER_IGNORE
-	item_list_node.get_v_scroll().modulate = Color(1,1,1,0)
+	item_list_node.get_v_scroll_bar().mouse_filter = Control.MOUSE_FILTER_IGNORE
+	item_list_node.get_v_scroll_bar().modulate = Color(1,1,1,0)
 	
 	# Disable input
 	disable_input()
@@ -36,7 +36,7 @@ func start(convoy):
 		convoy.item_stats_label.text = str("Item Stats\n", item_selected.get_stats_stringify())
 		
 		# Set the value to 0 for the scroll bar
-		$"Item List".get_v_scroll().value = 0
+		$"Item List".get_v_scroll_bar().value = 0
 	else:
 		convoy.item_text_reset()
 
