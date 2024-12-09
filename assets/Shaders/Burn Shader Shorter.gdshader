@@ -45,33 +45,33 @@ float fbm(vec2 coord){
 }
 
 vec4 burn(vec4 original, vec2 uv, float time) {
-	
+
 	vec4 new_col = original; // value that will be returned
-	
+
 	float noise_generated = fbm(uv * 6.0);
-	
+
 	float thickness = 0.1;
 	float outer_edge = (time - start_time) / duration;
 	float inner_edge = outer_edge + thickness;
-	
+
 	// fade-in to the orange/black gradient
 	if (noise_generated< inner_edge) {
 		float grad_factor = (inner_edge - noise_generated) / thickness;
 		grad_factor = clamp(grad_factor, 0.0, 1.0);
 		vec4 fire_grad = mix(fire, ash, grad_factor);
-		
+
 		float inner_fade = (inner_edge - noise_generated) / 0.02;
 		inner_fade = clamp(inner_fade, 0.0, 1.0);
-		
+
 		new_col = mix(new_col, fire_grad, inner_fade);
 	}
-	
+
 	// fade-out of the black at the end of the gradient
 	if (noise_generated < outer_edge) {
 		new_col.a = 1.0 - (outer_edge - noise_generated) / 0.03;
 		new_col.a = clamp(new_col.a, 0.0, 1.0);
 	}
-	
+
 	new_col.a *= original.a;
 	return new_col;
 }
@@ -79,7 +79,7 @@ vec4 burn(vec4 original, vec2 uv, float time) {
 void fragment() {
 	vec4 tex = textureLod(TEXTURE, UV, 0.0);
 	COLOR = tex;
-	
+
 	COLOR = burn(COLOR, UV, TIME);
 }
 

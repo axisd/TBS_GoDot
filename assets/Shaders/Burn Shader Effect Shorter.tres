@@ -1,11 +1,11 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://1b02liwx5tmt"]
 
-[ext_resource path="res://assets/Shaders/Burn Shader Shorter.gdshader" type="Shader" id=1]
+[ext_resource type="Shader" path="res://assets/Shaders/Burn Shader Shorter.gdshader" id="1"]
 
 [resource]
-shader = ExtResource( 1 )
-shader_param/ash = Color( 0.654902, 0.352941, 0.219608, 1 )
-shader_param/fire = Color( 0.92549, 0.0666667, 0.0666667, 1 )
-shader_param/OCTAVES = 6
-shader_param/start_time = 5.0
-shader_param/duration = 1.0
+shader = ExtResource("1")
+shader_parameter/ash = Color(0.654902, 0.352941, 0.219608, 1)
+shader_parameter/fire = Color(0.92549, 0.0666667, 0.0666667, 1)
+shader_parameter/OCTAVES = 6
+shader_parameter/start_time = 5.0
+shader_parameter/duration = 1.0

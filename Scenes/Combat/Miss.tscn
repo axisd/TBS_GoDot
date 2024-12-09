@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/battle_effects/Miss Sprite2D.png" type="Texture2D" id=1]
+[ext_resource type="Texture2D" uid="uid://d31g7vs4pnxt0" path="res://assets/battle_effects/Miss Sprite.png" id="1"]
 
 [sub_resource type="Animation" id=1]
 resource_name = "regular"

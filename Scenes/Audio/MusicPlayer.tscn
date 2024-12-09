@@ -1,39 +1,44 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://b1n2dmk3m33ub"]
 
-[ext_resource path="res://Scenes/Audio/MusicPlayer.gd" type="Script" id=1]
-[ext_resource path="res://assets/music/Fodlan Winds.ogg" type="AudioStream" id=2]
-[ext_resource path="res://assets/music/Chasing Daybreak.ogg" type="AudioStream" id=3]
-[ext_resource path="res://assets/music/Unfufilled.ogg" type="AudioStream" id=4]
+[ext_resource type="Script" path="res://Scenes/Audio/MusicPlayer.gd" id="1"]
+[ext_resource type="AudioStream" uid="uid://cjrpc3xymkxgc" path="res://assets/music/Fodlan Winds.ogg" id="2"]
+[ext_resource type="AudioStream" uid="uid://cetg4v4ryuaom" path="res://assets/music/Chasing Daybreak.ogg" id="3"]
+[ext_resource type="AudioStream" uid="uid://cug31fs5qiurh" path="res://assets/music/Unfufilled.ogg" id="4"]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id="1"]
 resource_name = "Volume Up"
 length = 0.5
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("AllyLevel:volume_db")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0.5 ),
-"transitions": PackedFloat32Array( 1 ),
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ 0.0 ]
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_phhcj"]
+_data = {
+"Volume Up": SubResource("1")
 }
 
 [node name="MusicPlayer" type="Node"]
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="Transition" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 2 )
+stream = ExtResource("2")
 
 [node name="AllyLevel" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
+stream = ExtResource("3")
 
 [node name="anim" type="AnimationPlayer" parent="."]
-"anims/Volume Up" = SubResource( 1 )
+libraries = {
+"": SubResource("AnimationLibrary_phhcj")
+}
 
 [node name="Unfufilled" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
-
-[node name="Tween" type="Tween" parent="."]
+stream = ExtResource("4")
