@@ -1,22 +1,23 @@
 [remap]
 
-importer="vnen.tiled_importer"
+importer="YATI"
 type="PackedScene"
-path="res://.import/level4.tmx-d33ba18a2da23973cfd9389a3d9964c9.scn"
+uid="uid://ypblviqg765j"
+path="res://.godot/imported/level4.tmx-d33ba18a2da23973cfd9389a3d9964c9.tscn"
 
 [deps]
 
 source_file="res://assets/levels/level4/level4.tmx"
-dest_files=[ "res://.import/level4.tmx-d33ba18a2da23973cfd9389a3d9964c9.scn" ]
+dest_files=["res://.godot/imported/level4.tmx-d33ba18a2da23973cfd9389a3d9964c9.tscn"]
 
 [params]
 
-custom_properties=true
-tile_metadata=true
-uv_clip=true
-image_flags=7
-collision_layer=1
-embed_internal_images=false
-save_tiled_properties=true
-add_background=true
-post_import_script=""
+use_default_filter=false
+add_class_as_metadata=false
+add_id_as_metadata=false
+no_alternative_tiles=false
+map_wangset_to_terrain=false
+custom_data_prefix="data_"
+tiled_project_file=""
+post_processor=""
+save_tileset_to=""
